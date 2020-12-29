@@ -14,7 +14,7 @@ resource "random_id" "main" {
     source_security_group_ids = join("|", var.source_security_group_ids)
 
     subnet_ids           = join("|", var.subnet_ids)
-    cluster_name         = data.aws_eks_cluster.main.name
+    cluster_name         = data.aws_eks_cluster.main.id
     launch_template_id   = lookup(var.launch_template, "id", "")
     launch_template_name = lookup(var.launch_template, "name", "")
   }
@@ -22,7 +22,7 @@ resource "random_id" "main" {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group
 resource "aws_eks_node_group" "main" {
-  cluster_name    = data.aws_eks_cluster.main.name
+  cluster_name    = data.aws_eks_cluster.main.id
   node_group_name = var.node_group_name == "" ? join("-", [var.cluster_name, random_id.main[0].hex]) : var.node_group_name
   node_role_arn   = var.node_role_arn == "" ? join("", aws_iam_role.main.*.arn) : var.node_role_arn
 
