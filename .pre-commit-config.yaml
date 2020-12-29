@@ -1,0 +1,29 @@
+repos:
+- repo: git://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.45.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  hooks:
+  - id: terraform_fmt
+  - id: terraform_docs
+    always_run: true
+    args:
+    - --args=--sort-by-required
+  - id: terraform_tflint
+- repo: git://github.com/pre-commit/pre-commit-hooks
+  rev: v3.4.0
+  hooks:
+  - id: check-merge-conflict
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-added-large-files
+  - id: detect-private-key
+- repo: git://github.com/jumanjihouse/pre-commit-hooks
+  rev: 2.1.4
+  hooks:
+  - id: shellcheck
+#- repo: git://github.com/adrienverge/yamllint.git
+#  rev: v1.25.0
+#  hooks:
+#  - id: yamllint
+#    args: [-c=.yamllint.yaml, -s]
